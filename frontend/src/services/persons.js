@@ -1,5 +1,5 @@
 import axios from 'axios'
-const PORT = 'https://part3-backend-k3b0.onrender.com/'
+const PORT = 'part3-backend-nw67.onrender.com'
 const baseUrl = `http://${PORT}/api/persons`
 
 const getAll = () => {
