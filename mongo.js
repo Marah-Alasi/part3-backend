@@ -14,6 +14,8 @@ mongoose.set('strictQuery',false)
 
 mongoose.connect(url)
 
+
+
 const personSchema = new mongoose.Schema({
   number: String,
   name: String,
@@ -22,13 +24,29 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('Person', personSchema)
 
-const person = new Person({
-  number: '000-777-555',
-  name: 'Jane Doe',
-  important: true,
-})
 
-note.save().then(result => {
-  console.log('contact saved!')
-  mongoose.connection.close()
-})
+if (process.argv.length>3){
+  newName = process.argv[3]
+  newNumber = process.argv[4]
+
+  const person = new Person({
+    number: newNumber,
+    name: newName,
+    important: true,
+  })
+
+  person.save().then(result => {
+    console.log(`${newName} contact saved!`)
+    mongoose.connection.close()
+  })
+}
+
+if (process.argv.length===3){
+  Person.find({}).then(result => {
+    result.forEach(contact => {
+      console.log(`${contact.name} ${contact.number}`)
+    })
+    mongoose.connection.close()
+  })
+}
+
